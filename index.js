@@ -17,7 +17,7 @@ app.use("/",notaRoutes)
 
 
 // LEVANTAR EL SERVIDOR //
-app.listen(port, () =>{
+app.listen(port, async() =>{
     console.log("http://localhost:" + port)
-    mongoConnection.establecerConexion()
+    await mongoConnection.establecerConexion()
 })

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principal</title>
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <!-- ICONOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+      /* Estilos Bootstrap */
+      body {
+        background-color: #f9f9f9;
+      }
+ 
+      main {
+        padding: 20px;
+      }
+
+      .card {
+        border: none;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        background-color: yellow;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .card-text {
+        color: #666;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+
+      /* Estilo para la animación cuando el mouse pasa por encima del card */
+      .card:hover {
+        transform: translateY(-5px);
+      }
+    </style>
+</head>
+<body>
+    <main>
+      <h1><b>ATHENEA</b></h1>
+      <h2>TABLERO DE NOTAS RÁPIDAS</h2>
+      <a href="/new/nota"><button class="btn btn-danger">Añadir nota</button></a>
+      <br><br>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% notas.forEach(nota => { %>
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">De: <%= nota.nombre %></h5>
+                <p class="card-text"><%= nota.texto %></p>
+                <p class="card-date"><%= nota.fecha %></p>
+                <button type="button" class="btn btn-danger btn-sm float-end" data-bs-toggle="modal"
+                data-bs-target="#updateModal<%= nota.id %>">
+                  Editar
+                </button>
+                <button type="button" class="btn btn-danger btn-sm float-end" data-bs-toggle="modal"
+                data-bs-target="#deleteModal<%= nota.id %>">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Modal para actualizar nota -->
+          <div class="modal fade" id="updateModal<%= nota.id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Editar Nota</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container mt-4">
+                    <h1>Editar Nota</h1>
+                    <form action="/<%= nota.id %>" method="post">
+                      <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input value="<%= nota.nombre %>" type="text" class="form-control" id="nombre" name="nombre">
+                      </div>
+                      <div class="mb-3">
+                        <label for="texto" class="form-label">Texto:</label>
+                        <input value="<%= nota.texto %>" type="text" class="form-control" id="texto" name="texto">
+                      </div>
+                      <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha:</label>
+                        <input value="<%= nota.fecha %>" type="date" class="form-control" id="fecha" name="fecha">
+                      </div>
+                      <div class="col-12 mt-4">
+                        <button class="btn btn-primary me-2" type="submit">Guardar</button>
+                        <a href="/" class="btn btn-secondary">Cancelar</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal para eliminar nota -->
+          <div class="modal fade" id="deleteModal<%= nota.id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  ¿Estás seguro de que deseas eliminar esta nota <%= nota.nombre %> <%= nota.texto %>?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <form action="/<%= nota.id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-secondary">Eliminar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

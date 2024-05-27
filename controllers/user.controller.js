@@ -7,7 +7,7 @@ exports.login = async function(req, res) {
     const { username, password } = req.body
     const pwd_textoPlano = password
     let userFoundData = null
-
+    await mongoose.conectarMongoDB()
     await User.findByUsername(username, async function(userFound, err) {
         if (err) {
             res.render("error_login.ejs")

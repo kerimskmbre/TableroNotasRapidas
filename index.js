@@ -9,6 +9,7 @@ const methodOverride = require("method-override")
 const session = require("express-session")
 const bodyParser = require("body-parser");
 
+app.set("trust proxy", 1);
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(methodOverride("_method"))
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 
-app.use(session({ secret: "123456789" }))
+app.use(session({ secret: "123456789", cookie: { maxAge: 60000 }}))
 
 app.use("/notas",notaRoutes)
 app.use("/",userRoutes)

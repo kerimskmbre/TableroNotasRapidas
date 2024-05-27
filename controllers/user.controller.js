@@ -62,10 +62,12 @@ exports.register = async function(req, res) {
     
 }
 
-exports.showLogin = function(req, res) {
+exports.showLogin = async function(req, res) {
+    await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
 }
 
-exports.showRegister = function(req, res) {
+exports.showRegister = async function(req, res) {
+    await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
 }

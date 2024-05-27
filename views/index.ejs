@@ -67,7 +67,7 @@
     <main>
       <h1><b>ATHENEA</b></h1>
       <h2>TABLERO DE NOTAS RÁPIDAS</h2>
-      <a href="/new/nota"><button class="btn btn-danger">Añadir nota</button></a>
+      <a href="/notas/new/nota"><button class="btn btn-danger">Añadir nota</button></a>
       <br><br>
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <% notas.forEach(nota => { %>
@@ -77,6 +77,7 @@
                 <h5 class="card-title">De: <%= nota.nombre %></h5>
                 <p class="card-text"><%= nota.texto %></p>
                 <p class="card-date"><%= nota.fecha %></p>
+                <% if(nota.nombre == user.nombre){%>
                 <button type="button" class="btn btn-danger btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#updateModal<%= nota.id %>">
                   Editar
@@ -85,6 +86,7 @@
                 data-bs-target="#deleteModal<%= nota.id %>">
                   Eliminar
                 </button>
+                <%}%>
               </div>
             </div>
           </div>
@@ -93,13 +95,13 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="deleteModalLabel">Editar Nota</h5>
+                  <h5 class="modal-title" id="deleteModalLabel" style="color: black;">Editar Nota</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="container mt-4">
-                    <h1>Editar Nota</h1>
-                    <form action="/<%= nota.id %>" method="post">
+                    <h1 style="color: black;">Editar Nota</h1>
+                    <form action="/notas/<%= nota.id %>" method="post">
                       <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre:</label>
                         <input value="<%= nota.nombre %>" type="text" class="form-control" id="nombre" name="nombre">
@@ -114,7 +116,7 @@
                       </div>
                       <div class="col-12 mt-4">
                         <button class="btn btn-primary me-2" type="submit">Guardar</button>
-                        <a href="/" class="btn btn-secondary">Cancelar</a>
+                        <a href="/notas/show/index" class="btn btn-secondary">Cancelar</a>
                       </div>
                     </form>
                   </div>
@@ -127,15 +129,15 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                  <h5 class="modal-title" id="deleteModalLabel" style="color: black;">Confirmar Eliminación</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="color: black;">
                   ¿Estás seguro de que deseas eliminar esta nota <%= nota.nombre %> <%= nota.texto %>?
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <form action="/<%= nota.id %>?_method=DELETE" method="POST">
+                  <form action="/notas/<%= nota.id %>?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-secondary">Eliminar</button>
                   </form>
                 </div>

@@ -13,9 +13,13 @@ router.post("/:id",notaController.updateNota)
 //Eliminar una nota
 router.delete("/:id",notaController.deleteNota)
 //renderizar pagina principal
-router.get("/",notaController.renderIndex)
+router.get("/show/index",notaController.renderIndex)
 //renderizar pagina de creación de notas
 router.get("/new/nota",notaController.renderNewNota)
+
+
+
+
 
 
 module.exports = router

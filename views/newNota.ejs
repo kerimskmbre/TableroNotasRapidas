@@ -14,10 +14,10 @@
 <body>
     <div class="container mt-4">
         <h1>Nueva Nota</h1>
-        <form action="/new" method="POST">
+        <form action="/notas/new" method="POST">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <input type="text" class="form-control" value="<%= user.nombre %>" id="nombre" name="nombre" required>
             </div>
             <div class="mb-3">
                 <label for="texto" class="form-label">Texto:</label>
@@ -29,7 +29,7 @@
             </div>
             <div class="col-12 mt-4">
                 <button class="btn btn-primary me-2" type="submit">Crear</button>
-                <a href="/" class="btn btn-secondary">Cancelar</a>
+                <a href="/notas/show/index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>

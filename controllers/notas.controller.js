@@ -1,6 +1,7 @@
 const Nota = require("../models/notas.model")
 const mongoose = require("../config/mongoDB.config")
 
+
 exports.findAllNotas = async (req, res) => {
     await mongoose.conectarMongoDB()
     await Nota.findNotas((error, categorias) => {
@@ -28,14 +29,14 @@ exports.findNotasById = async (req, res) => {
 exports.newNota= async (req, res) => {
     await mongoose.conectarMongoDB()
     const newNota = new Nota(req.body)
-    await Nota.createNota(newNota, (error, notaCreated) => {
-        if (error) {
-            res.status(500).json(error)
-        } else {
-            res.status(200).json(notaCreated)
-        }
-    })
-    res.redirect("/")
+    const notas = Nota.find({nombre:req.session.userLogued.nombre})
+    console.log(notas)
+    if((await notas).lengt == 3){
+        res.render("error_notas.ejs")
+    }else{
+        await newNota.save()
+        res.redirect("/notas/show/index")
+    }
 }
 
 exports.updateNota = async (req, res) => {
@@ -49,7 +50,7 @@ exports.updateNota = async (req, res) => {
             res.status(200).json(updatedNota)
         }
     })
-    res.redirect("/")
+    res.redirect("/notas/show/index")
 }
 
 exports.deleteNota = async (req, res) => {
@@ -62,16 +63,20 @@ exports.deleteNota = async (req, res) => {
             res.status(200).json(notaDeleted)
         }
     })
-    res.redirect("/")
+    res.redirect("/notas/show/index")
 }
 
 exports.renderIndex = async (req,res) =>{
     await mongoose.conectarMongoDB()
     const notas = await Nota.find()
-    res.render("index.ejs",{notas})
+    console.log(req.session.userLogued)
+    res.render("index.ejs",{notas,user:req.session.userLogued})
 }
 
 exports.renderNewNota = async(req,res) =>{
     await mongoose.conectarMongoDB()
-    res.render("newNota.ejs")
+    res.render("newNota.ejs",{user:req.session.userLogued})
 }
+
+
+

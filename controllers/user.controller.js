@@ -4,16 +4,15 @@ const User = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const mongoConn = require("../config/mongoDB.config")
 exports.login = async function(req, res) {
+    await mongoose.conectarMongoDB()
     const { username, password } = req.body
     const pwd_textoPlano = password
     let userFoundData = null
-    await mongoose.conectarMongoDB()
     await User.findByUsername(username, async function(userFound, err) {
         if (err) {
             res.render("error_login.ejs")
         } else {
             userFoundData = userFound
-            await mongoose.conectarMongoDB()
             const notas = await Nota.find()
 
             if (userFoundData) {
@@ -36,12 +35,11 @@ exports.login = async function(req, res) {
 }
 
 exports.register = async function(req, res) {
+    await mongoose.conectarMongoDB()
     const newUser = new User(req.body)
     newUser.password = await bcrypt.hash(newUser.password, 12)
-    await mongoose.conectarMongoDB()
     const notas = await Nota.find()
     try {
-        await mongoConn.conectarMongoDB()
         const newUser = new User(req.body)
         newUser.password = await bcrypt.hash(newUser.password, 12)
         console.log(req.body)

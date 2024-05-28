@@ -22,12 +22,17 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-    cookie: {
+    cookie: app.get("env") == "production" ? {
       secure:true,
       sameSite: 'none',
+      maxAge: 60 * 60 * 24 * 1000,
+      domain: 'tablero-notas-rapidas-garn.vercel.app/',
+      //domain: 'node-express-vercel-rho.vercel.app', //PARA QUE LA SESSION FUNCIONE CORRECTAMENTE CON COOKIES
+    }:{
       maxAge: 60 * 60 * 24 * 1000
     },
   }))
+  app.set("trust proxy", true); //
 
 app.use("/notas",notaRoutes)
 app.use("/",userRoutes)

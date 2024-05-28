@@ -30,7 +30,7 @@ exports.newNota= async (req, res) => {
     await mongoose.conectarMongoDB()
     const newNota = new Nota(req.body)
     const notas = Nota.find({nombre:req.session.userLogued.nombre})
-    if((await notas).lengt == 3){
+    if((await notas).length == 3){
         res.render("error_notas.ejs")
     }else{
         await newNota.save()

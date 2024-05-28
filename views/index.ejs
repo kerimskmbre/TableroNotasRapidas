@@ -67,7 +67,11 @@
     <main>
       <h1><b>ATHENEA</b></h1>
       <h2>TABLERO DE NOTAS RÁPIDAS</h2>
+      <h3>Solo se podrán añadir un máximo de 3 notas por usuario</h3>
       <a href="/notas/new/nota"><button class="btn btn-danger">Añadir nota</button></a>
+      <a href="/notas/filtrado/nombre"><button class="btn btn-danger">Buscar mis notas</button></a>
+      <a href="/notas/show/index"><button class="btn btn-danger">Mostrar todas las notas </button></a>
+      <a href="/logout"><button class="btn btn-danger">Cerrar Sesión </button></a>
       <br><br>
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <% notas.forEach(nota => { %>

@@ -17,7 +17,7 @@ router.get("/show/index",notaController.renderIndex)
 //renderizar pagina de creación de notas
 router.get("/new/nota",notaController.renderNewNota)
 
-
+router.get("/filtrado/nombre",notaController.filtradoPorNombre)
 
 
 

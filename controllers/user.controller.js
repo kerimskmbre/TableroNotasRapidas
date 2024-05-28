@@ -53,6 +53,12 @@ exports.register = async function(req, res) {
     
 }
 
+
+exports.logout = (req, res) => {
+    req.session.destroy()
+    res.redirect("/")
+}
+
 exports.showLogin = async function(req, res) {
     await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
@@ -62,3 +68,4 @@ exports.showRegister = async function(req, res) {
     await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
 }
+

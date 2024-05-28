@@ -11,6 +11,9 @@ router.post("/", userController.register)
 router.get("/login", userController.showLogin)
 // Autenticar
 router.post("/login", userController.login)
+//Logout//Desloguearse
+router.get("/logout", userController.logout);
+
 
 
 

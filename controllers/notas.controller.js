@@ -80,5 +80,9 @@ exports.renderNewNota = async(req,res) =>{
     res.render("newNota.ejs",{user:usuario})
 }
 
-
-
+exports.filtradoPorNombre = async(req,res) =>{
+    await mongoose.conectarMongoDB()
+    usuario = req.session.userLogued
+    const notas = await Nota.find({nombre:usuario.nombre})
+    res.render("index.ejs",{notas,user:usuario})
+}

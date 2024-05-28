@@ -3,7 +3,6 @@ const mongoose = require("../config/mongoDB.config")
 
 let usuario = {}
 exports.findAllNotas = async (req, res) => {
-    await mongoose.conectarMongoDB()
     await Nota.findNotas((error, categorias) => {
         if (error) {
             res.status(500).json(error)
@@ -15,7 +14,6 @@ exports.findAllNotas = async (req, res) => {
 }
 
 exports.findNotasById = async (req, res) => {
-    await mongoose.conectarMongoDB()
     const { id } = req.params
     console.log(id)
     try{
@@ -28,8 +26,6 @@ exports.findNotasById = async (req, res) => {
 
 exports.newNota= async (req, res) => {
     usuario = req.session.userLogued
-    await mongoose.conectarMongoDB()
-    usuario = req.session.userLogued
     const newNota = new Nota(req.body)
     const notas = Nota.find({nombre:usuario.nombre})
     if((await notas).length == 3){
@@ -41,7 +37,6 @@ exports.newNota= async (req, res) => {
 }
 
 exports.updateNota = async (req, res) => {
-    await mongoose.conectarMongoDB()
     const notaToUpdate = req.body
     const { id } = req.params
     await Nota.updateNota(id, notaToUpdate, (error, updatedNota) => {
@@ -55,7 +50,6 @@ exports.updateNota = async (req, res) => {
 }
 
 exports.deleteNota = async (req, res) => {
-    await mongoose.conectarMongoDB()
     const { id } = req.params
     await Nota.deleteNota(id, (error, notaDeleted) => {
         if (error) {
@@ -76,14 +70,10 @@ exports.renderIndex = async (req,res) =>{
 
 exports.renderNewNota = async(req,res) =>{
     usuario = req.session.userLogued
-    await mongoose.conectarMongoDB()
-    usuario = req.session.userLogued
     res.render("newNota.ejs",{user:usuario})
 }
 
 exports.filtradoPorNombre = async(req,res) =>{
-    usuario = req.session.userLogued
-    await mongoose.conectarMongoDB()
     usuario = req.session.userLogued
     const notas = await Nota.find({nombre:usuario.nombre})
     res.render("index.ejs",{notas,user:usuario})

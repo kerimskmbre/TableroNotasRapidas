@@ -60,12 +60,10 @@ exports.logout = (req, res) => {
 }
 
 exports.showLogin = async function(req, res) {
-    await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
 }
 
 exports.showRegister = async function(req, res) {
-    await mongoConn.conectarMongoDB()
     res.render("login-register.ejs")
 }
 

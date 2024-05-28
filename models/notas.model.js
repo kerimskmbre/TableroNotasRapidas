@@ -27,9 +27,8 @@ Nota.findNotas = async function() {
     }
 }
 
-Nota.createNota = async function (newNota,nombre, result) {
+Nota.createNota = async function (newNota, result) {
     try{
-        const notas = await Nota.find(nombre)
         await newNota.save()
     }catch(error){
         throw(error)

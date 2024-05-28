@@ -1,7 +1,7 @@
 const Nota = require("../models/notas.model")
 const mongoose = require("../config/mongoDB.config")
 
-
+const usuario = req.session.userLogued
 exports.findAllNotas = async (req, res) => {
     await mongoose.conectarMongoDB()
     await Nota.findNotas((error, categorias) => {

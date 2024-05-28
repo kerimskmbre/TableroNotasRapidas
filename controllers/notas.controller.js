@@ -1,7 +1,7 @@
 const Nota = require("../models/notas.model")
 const mongoose = require("../config/mongoDB.config")
 
-const usuario = req.session.userLogued
+const usuario = {}
 exports.findAllNotas = async (req, res) => {
     await mongoose.conectarMongoDB()
     await Nota.findNotas((error, categorias) => {
@@ -29,7 +29,8 @@ exports.findNotasById = async (req, res) => {
 exports.newNota= async (req, res) => {
     await mongoose.conectarMongoDB()
     const newNota = new Nota(req.body)
-    const notas = Nota.find({nombre:req.session.userLogued.nombre})
+    usuario = req.session.userLogued
+    const notas = Nota.find({nombre:usuario.nombre})
     if((await notas).length == 3){
         res.render("error_notas.ejs")
     }else{
@@ -69,12 +70,14 @@ exports.renderIndex = async (req,res) =>{
     await mongoose.conectarMongoDB()
     const notas = await Nota.find()
     console.log(req.session.userLogued)
-    res.render("index.ejs",{notas,user:req.session.userLogued})
+    usuario = req.session.userLogued
+    res.render("index.ejs",{notas,user:usuario})
 }
 
 exports.renderNewNota = async(req,res) =>{
     await mongoose.conectarMongoDB()
-    res.render("newNota.ejs",{user:req.session.userLogued})
+    usuario = req.session.userLogued
+    res.render("newNota.ejs",{user:usuario})
 }
 
 

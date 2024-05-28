@@ -27,9 +27,10 @@ exports.findNotasById = async (req, res) => {
 }
 
 exports.newNota= async (req, res) => {
-    await mongoose.conectarMongoDB()
-    const newNota = new Nota(req.body)
     usuario = req.session.userLogued
+    await mongoose.conectarMongoDB()
+    usuario = req.session.userLogued
+    const newNota = new Nota(req.body)
     const notas = Nota.find({nombre:usuario.nombre})
     if((await notas).length == 3){
         res.render("error_notas.ejs")
@@ -67,20 +68,21 @@ exports.deleteNota = async (req, res) => {
 }
 
 exports.renderIndex = async (req,res) =>{
-    await mongoose.conectarMongoDB()
+    usuario = req.session.userLogued
     const notas = await Nota.find()
     console.log(req.session.userLogued)
-    usuario = req.session.userLogued
     res.render("index.ejs",{notas,user:usuario})
 }
 
 exports.renderNewNota = async(req,res) =>{
+    usuario = req.session.userLogued
     await mongoose.conectarMongoDB()
     usuario = req.session.userLogued
     res.render("newNota.ejs",{user:usuario})
 }
 
 exports.filtradoPorNombre = async(req,res) =>{
+    usuario = req.session.userLogued
     await mongoose.conectarMongoDB()
     usuario = req.session.userLogued
     const notas = await Nota.find({nombre:usuario.nombre})

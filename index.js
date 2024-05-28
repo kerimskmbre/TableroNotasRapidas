@@ -17,10 +17,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 app.use(cookieParser())
-app.use(session({ 
-    secret: "123456789",
-    cookie: { maxAge: 19 * 60000 }
-  }))//----------
+
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure:true,
+      sameSite: 'none',
+      maxAge: 60 * 60 * 24 * 1000
+    },
+  }))
 
 app.use("/notas",notaRoutes)
 app.use("/",userRoutes)

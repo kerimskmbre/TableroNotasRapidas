@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 app.use(cookieParser())
 
-app.use(session({ secret: "123456789", secure:true}))//----------
+app.use(session({ secret: "123456789", cookie:{ secure:true}}))//----------
 
 app.use("/notas",notaRoutes)
 app.use("/",userRoutes)
